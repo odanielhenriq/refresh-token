@@ -2,14 +2,17 @@ import { Router } from "express";
 import { CreateUserUserController } from "./useCases/createUser/CreateUserController";
 import { AuthenticateUserController } from "./useCases/authenticateUser/AuthenticateUserController";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import { RefreshTokenUserController } from "./useCases/refreshTokenUser/RefreshTokenUserController";
 
 const router = Router();
 
 const createUserUserController = new CreateUserUserController;
 const authenticateUserController = new AuthenticateUserController;
+const refreshTokenUserController = new RefreshTokenUserController;
 
 router.post("/users", createUserUserController.handle)
 router.post("/login", authenticateUserController.handle)
+router.post("/refresh-token", refreshTokenUserController.handle)
 
 router.get("/courses", ensureAuthenticated, (request, response) => {
     return response.json([
